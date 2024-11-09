@@ -1,0 +1,111 @@
+<mat-toolbar class="mat-elevation-z8" style="direction: rtl; font-family: vazirmatn;">
+
+    <button mat-icon-button *ngIf="sidenav.mode === 'over'" (click)="sidenav.toggle()">
+
+        <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
+
+        <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
+
+    </button> {{ apptitle }}
+
+    <div class="me-auto d-flex">
+
+        <img src="../../../assets/imgs/Dyar_Logo_ORG.png" alt="دیــار سازمانی" routerLink="/dyar" class="pointer">
+
+    </div>
+
+
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+    <mat-sidenav #sidenav="matSidenav" opened class="mat-elevation-z8" position="end">
+
+        <div class="sidenav-container">
+
+            <img class="avatar mat-elevation-z8 pointer" src="{{ user.Img || '../../../../assets/imgs/user_profile.png'}}" routerLink="/dyar/profile" />
+
+            <h4 class="name">{{ user.name }}</h4>
+
+            <p class="designation "> نقش : {{ user.role }} </p>
+
+            <mat-divider class="mb-0"></mat-divider>
+
+            <!-- سایر -->
+
+            <button routerLink="users" mat-button class="menu-button" >
+
+                <mat-icon>person</mat-icon>
+
+                <span>مدیریت کاربران</span>
+
+            </button>
+
+            <button mat-button class="menu-button " (click)="showSubMenue3=!showSubMenue3">
+
+                <mat-icon *ngIf="!showSubMenue3">keyboard_arrow_down</mat-icon>
+
+                <mat-icon *ngIf="showSubMenue3">keyboard_arrow_up</mat-icon>
+
+                <span style="font-size: 13px;font-weight: bold;">سایر</span>
+
+            </button>
+
+            <section [@slideInOut]="showSubMenue3 ? 'open' : 'closed'">
+
+                <!-- <button mat-button class="menu-button" routerLink="/dyar/myCalendar" (click)="closeNav()">
+
+                    <mat-icon>calendar_today</mat-icon>
+
+                    <span style="font-size: 12px;"> تقویم کاری من</span>
+
+                </button> -->
+
+                <button mat-button class="menu-button" data-bs-toggle="modal" data-bs-target="#help-Modal">
+
+                    <mat-icon>help</mat-icon>
+
+                    <span>راهنما</span>
+
+                </button>
+
+            </section>
+
+            <!-- خروج -->
+
+            <button mat-button class="text-danger menu-button" (click)="logOut()">
+
+                <mat-icon class="fw-bold" style="font-size: 20px;">logout</mat-icon>
+
+                <span class="fw-bold" style="font-size: 13px;">خروج از برنامه</span>
+
+            </button>
+
+        </div>
+
+        <div class="footer">
+
+            <a style="text-decoration: none;" href="https://geoxity.co" target="_blank">
+
+                <img src="../../../assets/imgs/logo-small.jpeg" class="footer-logo mb-1" alt="geoxity">
+
+                <div style="font-weight: 700; color:#ffffff"> نسخه {{ version | faNum }}</div>
+
+            </a>
+            
+        </div>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+
+        <div class="content mat-elevation-z8" id="content">
+
+            <router-outlet></router-outlet>
+    
+
+        </div>
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

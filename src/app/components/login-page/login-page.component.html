@@ -1,0 +1,160 @@
+<main>
+    
+    <section class="login-page" *ngIf="!isDesktop">
+
+        <img src="../../../assets/imgs/Dyar_Logo_ORG.png" alt="دیــار سازمانی">
+
+        <ng-container *ngIf="!codeSent">
+
+            <form #login="ngForm" class="form" (ngSubmit)="login()" autocomplete="off">
+
+                <h3> ورود به سامانه </h3>
+
+                <div class="input-group">
+
+                    <input type="text" name="loginUser" id="loginUser" [(ngModel)]="model.strMobile" required>
+
+                    <label for="loginUser" > شماره موبایل </label>
+
+                </div>
+    
+                <div class="input-group">
+
+                    <input type="password" name="loginPassword" id="loginPassword" [(ngModel)]="model.strPassword" required>
+
+                    <label for="loginPassword"> رمز عبور </label>
+
+                </div>
+    
+                <button type="submit" class="submit-btn"> ورود به سامانه </button>
+    
+                <div class="forgot-pw" (click)="forgotPw(model.strMobile)">
+
+                    <span> رمز عبور خود را فراموش کرده اید ؟ </span>
+
+                </div>
+
+            </form>
+
+        </ng-container>
+
+        <ng-container *ngIf="codeSent">
+
+            <form #checkOTP="ngForm" class="form" (ngSubmit)="checkOtp(model.strMobile, model.otp)" autocomplete="off">
+
+                <div class="input-group">
+
+                    <input type="text" name="otp" id="otp" placeholder="_ _ _ _ _" [(ngModel)]="model.otp" required>
+
+                    <label for="otp"> کد ارسال شده را وارد کنید </label>
+
+                </div>
+
+                <button type="submit" class="submit-btn" > ارسال </button>
+
+            </form>
+
+        </ng-container>
+
+        <div class="footer">
+
+            <a class="footer-container" href="https://geoxity.co" target="_blank">
+        
+                <img src="../../../assets/imgs/logo-small.jpeg" class="footer-logo">
+
+                <div class="text-center" style="font-weight: bold; color:#00c410"> {{ version | faNum }} </div>
+
+            </a>
+
+        </div>
+
+    </section>
+    
+    <!-- Desktop Mode -->
+
+    <section class="bg-img-login" *ngIf="isDesktop">
+
+        <div class="position-fixed positions">
+
+            <div class="d-flex justify-content-center align-items-center flex-column">
+
+                <img src="../../../assets/imgs/Dyar_Logo_ORG.png" alt="دیــار سازمانی">
+
+                <span style="font-size: 19px;" class="mt-2 fw-bold"> دیــار سازمانی </span>
+
+            </div>
+
+            <ng-container *ngIf="!codeSent">
+
+                <form #logIn="ngForm" class="form insert" (ngSubmit)="login()" autocomplete="off">
+
+                    <h3> ورود به سامانه </h3>
+
+                    <mat-form-field appearance="fill" class="col-12 text-end f16">
+
+                        <mat-label class="text-end "> شماره موبایل </mat-label>
+
+                        <input matInput class="inp"  placeholder="شماره موبایل خود را وارد کنید" type="text" name="loginUser" id="loginUser" [(ngModel)]="model.strMobile" required>
+
+                        <mat-icon matSuffix class="my-icon text-end">phone_android</mat-icon>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="col-12 text-end f16">
+
+                        <mat-label class="text-center"> رمز عبور </mat-label>
+
+                        <input  matInput type="{{inpType}}" name="loginPassword" id="loginPassword" [(ngModel)]="model.strPassword" required>
+
+                        <mat-icon matSuffix class="my-icon" (click)="showPass()">remove_red_eye</mat-icon>
+
+    
+                    </mat-form-field>
+
+                    <button type="submit" class="submit-btn"> ورود به سامانه </button>
+    
+                    <div class="forgot-pw" (click)="forgotPw(model.strMobile)">
+    
+                        <span > رمز عبور خود را فراموش کرده اید ؟ </span>
+    
+                    </div>
+
+                </form>
+
+            </ng-container>
+
+            <ng-container *ngIf="codeSent">
+
+                <form #checkOTP="ngForm" class="form" (ngSubmit)="checkOtp(model.strMobile, model.otp)" autocomplete="off">
+    
+                    <div class="input-group">
+    
+                        <input type="text" name="otp" id="otp" placeholder="_ _ _ _ _" [(ngModel)]="model.otp" required>
+    
+                        <label for="otp"> کد ارسال شده را وارد کنید </label>
+    
+                    </div>
+    
+                    <button type="submit" class="submit-btn"> ارسال </button>
+    
+                </form>
+    
+            </ng-container>
+
+            <div class="position-fixed cb">
+
+                <a class="footer-container" href="https://geoxity.co" target="_blank">
+        
+                    <img src="../../../assets/imgs/logo-small.jpeg" class="footer-logo">
+    
+                    <div class="text-center" style="font-weight: bold; color:#00c410"> {{ version | faNum }} </div>
+    
+                </a>
+                
+            </div>
+
+        </div>
+
+    </section>
+
+</main>

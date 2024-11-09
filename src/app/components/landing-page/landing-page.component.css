@@ -1,0 +1,174 @@
+mat-toolbar {
+    background: #36474F;
+    color: white;
+}
+
+mat-toolbar img {
+    width: 50px;
+    border-radius: 10px;
+    margin-right: auto;
+}
+
+mat-sidenav {
+    margin: 16px;
+    width: 200px;
+    border-right: none;
+    background: linear-gradient(180deg, rgba(249, 198, 1, 1) 0%, rgba(224, 172, 97, 1) 100%);
+    color: #000;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
+
+.content {
+
+    direction: rtl;
+    position: relative;
+    height: calc(100vh - 100px);
+    border-radius: 10px;
+    margin: 16px 32px 16px 16px;
+    overflow: auto;
+    background: white;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 65px);
+}
+
+.menu-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.8rem;
+    transition: all 0.4s ease;
+}
+
+.menu-button:hover {
+    background: #fff;
+    color: #000;
+    border-radius: 25px;
+}
+
+.menu-button mat-icon {
+    margin-right: 8px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.name {
+    margin-top: 8px;
+    color: #000;
+    font-family: 'vazirmatn';
+}
+
+.designation {
+    font-size: 0.8rem;
+    margin-top: -10px;
+    color: #000;
+    font-family: 'vazirmatn';
+}
+
+mat-divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.loader-container {
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.bottom-menu {
+    bottom: 10px;
+    left: 29px;
+}
+
+.with-bottom {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.h-63 {
+    height: 59px;
+}
+
+.add_infotask:before {
+    content: "";
+    background-color: #000;
+    height: 10px;
+    width: 10px;
+}
+
+section {
+    background-color: #ffffffdb;
+    border-radius: 25px;
+
+}
+
+.footer-logo {
+
+    max-width: 50%;
+
+    mix-blend-mode: color-burn;
+}
+
+
+@media screen and (min-width: 800px) {
+    .with-bottom {
+        /* position: absolute !important; */
+        height: 60px;
+        background-color: transparent !important;
+        border: none !important;
+    }
+
+    .with-bottom>div {
+        clip-path: circle(37% at 50% 50%);
+        background-color: #9c9c9c2d;
+        padding: 0;
+        width: 90px;
+
+    }
+
+    .font-size {
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .h-63 {
+        height: 60px;
+    }
+
+    .bottom-menu {
+        bottom: 40px;
+        left: 49px;
+        width: max-content;
+    }
+
+    .with-bottom:hover {
+        opacity: 0.3;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    .with-bottom {
+        width: 100%;
+        margin-left: -30px;
+        padding-top: 9px;
+        margin-bottom: -13px;
+        justify-content: center !important;
+    }
+
+    .bg-warning {
+        border-radius: 20px;
+    }
+
+}
+

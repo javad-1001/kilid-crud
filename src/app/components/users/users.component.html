@@ -1,0 +1,494 @@
+<main class="w-100 h-100  p-3">
+
+    <p class="dir"> تعداد کاربران سازمانی : <strong class="text-danger mb-2">{{ list_OrganizationalUser.length | faNum}}
+            نفر </strong></p>
+
+    <section class="main-section border border-2  w-100 ">
+
+        <form #keyValue="ngForm" (input)="keySearch(keyValue)" class="row dir my-3 gx-2 gy-2  pb-2 px-2 w-100">
+
+            <div class="col-10 CustomInput ">
+
+                <input ngModel name="key" required class="form-control" autocomplete="off">
+
+                <span>جستجو کنید</span>
+
+            </div>
+
+            <div class="col-2 buttonContainer  d-flex justify-content-center align-items-center ">
+
+                <button type="button" class="px-3 py-2  text-white btn"
+                    (click)="new_EnterpriseUser(add_EnterpriseUser)"> ثبت کاربر جدید </button>
+
+            </div>
+
+        </form>
+
+        <div id="table_container">
+
+            <table class="table table-striped dir">
+
+
+                <thead>
+
+                    <tr class="text-center">
+
+                        <td >#</td>
+                        <td > عملیات </td>
+                        <td> نام و نام خانوادگی </td>
+                        <td> نام کاربری </td>
+                        <td> شماره همراه </td>
+                        <td> نقش </td>
+                        <td> فعال </td>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr class="text-center col-12 dir" *ngFor="let item of list_OrganizationalUser;let i = index;">
+
+                        <th> {{ i+1 | faNum}} </th>
+
+
+                        <td>
+                            <mat-icon title="ویرایش" class="pointer"
+                                (click)="openEdit(item,edit_EnterpriseUser)">edit</mat-icon>
+
+                            <mat-icon title="حذف" class="pointer" (click)="delete_User(item)">delete</mat-icon>
+
+                        </td>
+
+                        <td>{{item.strFullName | faNum }}</td>
+                        <td>{{item.strUserName | faNum}}</td>
+                        <td>{{item.strMobile | faNum}}</td>
+                        <td>{{item.strOrganizationalRole_strComment | faNum}}</td>
+                        <td [ngClass]="item.bActive  ? 'fw-bold text-success' : 'fw-bold text-danger' " >{{item.bActive ? 'فعال' : 'غیرفعال' }}</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- add Modal -->
+
+    <ng-template #add_EnterpriseUser>
+
+        <div class="modal-header">
+
+            <h4 class="modal-title"> ثبت کاربر سازمانی </h4>
+
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+
+        </div>
+
+        <div class="modal-body ">
+
+            <form #user="ngForm" (ngSubmit)="saveNew_User(user)" class="row dir  gx-2 gy-3   px-2 w-100">
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input [(ngModel)]="EnterpriseUser.name" name="name" required class="form-control">
+
+                    <span class="text-danger"> نام </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input [(ngModel)]="EnterpriseUser.lastName" name="lastName" required class="form-control">
+
+                    <span class="text-danger"> نام خانوادگی </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input oninput="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="11" ngModel name="strMobile"
+                        required class="form-control">
+
+                    <span class="text-danger"> شماره موبایل </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input ngModel name="strUserName" required class="form-control">
+
+                    <span class="text-danger"> نام کاربری </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input oninput="this.type='password'" ngModel name="strPassword" required class="form-control">
+
+                    <span class="text-danger"> رمز عبور </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input oninput="this.type='password'" ngModel name="confirm_Password" required class="form-control">
+
+                    <span class="text-danger"> تکرار رمز عبور </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select ngModel name="iOrganizationalRole" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option *ngFor="let item of list_orgRole" [value]="item.iOrganizationalRole">{{item.strComment}}
+                        </option>
+
+
+                    </select>
+
+                    <span class="text-danger"> نقش </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select ngModel name="iZone" required class="rounded form-control" #user_Zone>
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option *ngFor="let item of list_zone" [value]="item.tiZoneNum">{{item.strName | faNum }}
+                        </option>
+
+
+                    </select>
+
+                    <span class="text-danger"> منطقه </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input ngModel [value]="user_Zone.value == '0' ? '0' : '' " name="tiSubregion"
+                        [disabled]="user_Zone.value == '0' " required class="form-control">
+
+                    <span class="text-danger"> ناحیه </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select ngModel name="tiManager" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option *ngFor="let item of list_Manager" [value]="item.tiManager">{{item.strComment}}</option>
+
+                    </select>
+
+                    <span class="text-danger"> مدیر پاسخگو </span>
+
+                </div>
+
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select ngModel name="bActive" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+                        <option [value]="true"> فعال </option>
+                        <option [value]="false"> غیر فعال </option>
+
+                    </select>
+
+                    <span class="text-danger"> وضعیت </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 position-relative persian-datePicker ">
+
+                    <ng-persian-datepicker [uiHideAfterSelectDate]="true" [timeEnable]="false" [dateInitValue]="false"
+                        dateFormat="jYYYY/jMM/jDD">
+
+                        <input #datePicker [formControl]="birthDate" required class="form-control pointer">
+
+                    </ng-persian-datepicker>
+
+                    <span *ngIf="birthDate.value !== null && birthDate.value !== '' "
+                        class="position-absolute float-span text-danger"> تاریخ تولد </span>
+
+                    <span *ngIf="birthDate.value === null || birthDate.value === '' "
+                        class="position-absolute Nfloat-span text-danger"> تاریخ تولد </span>
+
+                </div>
+
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input ngModel name="user_Code" required class="form-control">
+
+                    <span class="text-danger"> کد </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select ngModel name="bMobile" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+                        <option [value]="true"> بله </option>
+                        <option [value]="false"> خیر </option>
+
+                    </select>
+
+                    <span class="text-danger"> کاربر موبایل </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select ngModel name="bWeb" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+                        <option [value]="true"> بله </option>
+                        <option [value]="false"> خیر </option>
+                    </select>
+
+                    <span class="text-danger"> کاربر وب </span>
+
+                </div>
+
+
+                <div class=" d-flex flex-row-reverse col-12 ">
+
+                    <button type="submit" class="col-2 btn edit-button bg-success text-white"> ذخیره </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="modal-footer"> </div>
+
+    </ng-template>
+
+
+    <!-- Edit Modal -->
+
+    <ng-template #edit_EnterpriseUser>
+
+        <div class="modal-header">
+
+            <h4 class="modal-title"> ثبت کاربر سازمانی </h4>
+
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+
+        </div>
+
+        <div class="modal-body ">
+
+            <form #edit_User="ngForm" (ngSubmit)="editUser_Data(edit_User)" class="row dir  gx-2 gy-3   px-2 w-100">
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input [(ngModel)]="temporaryStorage.strFullName" name="lastName" required class="form-control">
+
+                    <span> نام و نام خانوادگی </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input disabled [ngModel]="[temporaryStorage.strMobile | faNum]" name="strMobile" required
+                        class="form-control">
+
+                    <span> شماره موبایل </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input [ngModel]="[temporaryStorage.strUserName | faNum]" disabled name="strUserName" required
+                        class="form-control">
+
+                    <span> نام کاربری </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input type="password" [(ngModel)]="temporaryStorage.strPassword" name="strPassword" required
+                        class="form-control">
+
+                    <span> رمز عبور </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input type="password" [(ngModel)]="temporaryStorage.confirm_Password" name="confirm_Password"
+                        required class="form-control">
+
+                    <span> تکرار رمز عبور </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select [(ngModel)]="temporaryStorage.iOrganizationalRole" name="iOrganizationalRole" required
+                        class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option *ngFor="let item of list_orgRole" [value]="item.iOrganizationalRole">{{item.strComment}}
+                        </option>
+
+
+                    </select>
+
+                    <span> نقش </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select [(ngModel)]="temporaryStorage.iZone" name="iZone" required class="rounded form-control"
+                        #user_Zone>
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option *ngFor="let item of list_zone" [value]="item.tiZoneNum">{{item.strName | faNum }}
+                        </option>
+
+                    </select>
+
+                    <span> منطقه </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input [(ngModel)]="temporaryStorage.tiSubregion" [value]="user_Zone.value == '0' ? '0' : '' "
+                        name="tiSubregion" [disabled]="user_Zone.value == '0' " required class="form-control">
+
+                    <span> ناحیه </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select [(ngModel)]="temporaryStorage.tiManager" name="tiManager" required
+                        class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option *ngFor="let item of list_Manager" [value]="item.tiManager">{{item.strComment}}</option>
+
+                    </select>
+
+                    <span> مدیر پاسخگو </span>
+
+                </div>
+
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select [(ngModel)]="temporaryStorage.bActive" name="bActive" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+                        <option [value]="true"> فعال </option>
+                        <option [value]="false"> غیر فعال </option>
+
+                    </select>
+
+                    <span> وضعیت </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 position-relative persian-datePicker ">
+
+                    <ng-persian-datepicker [uiHideAfterSelectDate]="true" [timeEnable]="false" [dateInitValue]="false"
+                        dateFormat="jYYYY/jMM/jDD">
+
+                        <input #datePicker [formControl]="editBirthDate" required class="form-control pointer">
+
+                    </ng-persian-datepicker>
+
+                    <span *ngIf="editBirthDate.value !== null && editBirthDate.value !== '' "
+                        class="position-absolute float-span"> تاریخ تولد </span>
+
+                    <span *ngIf="editBirthDate.value === null || editBirthDate.value === '' "
+                        class="position-absolute Nfloat-span"> تاریخ تولد </span>
+
+                </div>
+
+
+                <div class="col-12 col-md-4 CustomInput ">
+
+                    <input [(ngModel)]="temporaryStorage.strActiovationCode" name="user_Code" required
+                        class="form-control">
+
+                    <span> کد </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select [(ngModel)]="temporaryStorage.bMobile" name="bMobile" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option [value]="true"> بله </option>
+
+                        <option [value]="false"> خیر </option>
+
+                    </select>
+
+                    <span> کاربر موبایل </span>
+
+                </div>
+
+                <div class="col-12 col-md-4 selectBox">
+
+                    <select [(ngModel)]="temporaryStorage.bWeb" name="bWeb" required class="rounded form-control">
+
+                        <option value="-1"> انتخاب کنید </option>
+
+                        <option [value]="true"> بله </option>
+
+                        <option [value]="false"> خیر </option>
+
+                    </select>
+
+                    <span> کاربر وب </span>
+
+                </div>
+
+
+                <div class=" d-flex flex-row-reverse col-12 ">
+
+                    <button type="submit" class="col-2 btn edit-button bg-success text-white"> ویرایش </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="modal-footer"> </div>
+
+    </ng-template>
+
+
+
+</main>

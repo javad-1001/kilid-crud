@@ -1,0 +1,115 @@
+<div class="row p-0 m-0">
+
+    <h2 style="font-family: inherit;padding: 10px ;direction: rtl;"> ویرایش اطلاعات کاربری </h2>
+
+    <div class="d-flex flex-column justify-content-center align-items-center p-2">
+
+        <div class="mb-4 col-lg-4">
+
+            <div class="d-flex justify-content-center">
+
+                <img class="avatar mat-elevation-z8" src="{{ Img || '../../../../assets/imgs/user_profile.png'}}" />
+
+            </div>
+
+        </div>
+    
+        <div class="col-lg-8">
+
+            <div class="col-12 row d-flex dir">
+
+                <div class="col-md-6 col-12 dir">
+    
+                    <div class="mb-3">
+
+                        <label for="exampleInputPassword1" class="form-label">نام نام خانوادگی</label>
+
+                        <input type="text" class="form-control bg-gray"  [(ngModel)]="model.strFullName">
+
+                    </div>
+
+                </div>
+    
+                <div class="col-md-6 col-12 dir">
+    
+                    <label for="exampleInputPassword1" class="form-label"> کلمه عبور </label>
+
+                    <div class="input-group ">
+    
+                        <input style="border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;"
+
+                            type="{{pass}}" class="form-control bg-gray"  [(ngModel)]="model.strPassword">
+
+                        <i class="material-icons input-group-text "
+
+                            style="border-top-right-radius:0 !important;border-bottom-right-radius:0 !important;"
+
+                            (click)="showPassword()">remove_red_eye</i>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-12 dir">
+    
+                    <label for="exampleInputPassword1" class="form-label"> کلمه عبور جدید </label>
+    
+                    <div class="input-group ">
+    
+                        <input style="border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;"
+
+                            type="{{newPassword}}" class="form-control bg-gray" id="" [(ngModel)]="model.strNewPassword">
+
+                        <i style="border-top-right-radius:0 !important;border-bottom-right-radius:0 !important;"
+
+                            class="material-icons input-group-text" (click)="showNewPassword()">remove_red_eye</i>
+
+    
+                    </div>
+                </div>
+    
+                <div class="col-md-6 col-12 dir">
+
+                    <label for="exampleInputPassword1" class="form-label"> تکرار کلمه عبور جدید </label>
+    
+                    <div class="input-group ">
+    
+                        <input style="border-top-left-radius:0 !important;border-bottom-left-radius:0 !important;"
+
+                            type="{{newPassCheck}}" class="form-control bg-gray" id=""
+
+                            [(ngModel)]="model.strNewPasswordCheck">
+
+                        <i style="border-top-right-radius:0 !important;border-bottom-right-radius:0 !important;"
+
+                            class="material-icons input-group-text" (click)="showNewPasswordCheck()">remove_red_eye</i>
+    
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-12 dir">
+    
+                    <div class="my-3">
+
+                        <label for="exampleInputPassword1" class="form-label">نقش کاربر</label>
+
+                        <input type="text" class="form-control" id="" [(ngModel)]="model.role" disabled="">
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex justify-content-center mb-5">
+
+                    <button class="btn btn-success" (click)="edite()">ویرایش پروفایل</button>
+
+                </div>
+
+            </div>
+
+        </div>
+    
+    </div>
+
+</div>
